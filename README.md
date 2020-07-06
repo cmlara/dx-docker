@@ -2,15 +2,18 @@
 
 This repo will allow developers to mimic the FCS MCaaS container environment locally.
 
+![DX Architecture](./docs/DX-Architecture.png)
+
 ## Quickstart
 
-Install and configure docker (TBD: link to instructions)
+Install and configure docker and python
 
 1. Close this repo locally
-2. Change to this directory: `cd dx-docker`
-3. Clone SDEP: `git clone https://github.com/GSA/DX-Entrypoint.git`
-4. Build dockerfiles locally:  `docker-compose build`
-5. Bring up services: `docker-compose up`
+2. Install localstack: `pip install localstack`
+3. Change to this directory: `cd dx-docker`
+4. Clone SDEP: `git clone https://github.com/GSA/DX-Entrypoint.git`
+5. Build dockerfiles locally:  `docker-compose build`
+6. Bring up services: `docker-compose up`
 
 Services:
 * DX UI (SDEP): `http://localhost:8080`
