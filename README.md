@@ -45,4 +45,4 @@ to your local development environment, edit the `./rds-mysql/create-databases.sh
 
 ## AWS Resources
 
-This project provides (Localstack)[https://github.com/localstack/localstack] versions of SNS, SQS and S3.  All are available on port 4566 and accessible in other containers as AWS endpoint `http://localstack:4566` 
+This project provides [Localstack](https://github.com/localstack/localstack) versions of SNS, SQS and S3.  All are available on port 4566 and accessible in other containers as AWS endpoint `http://localstack:4566` 
