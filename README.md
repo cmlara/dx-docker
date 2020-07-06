@@ -42,3 +42,7 @@ A default, un-configured version of Drupal 8 is running at `http://127.0.0.1:808
 
 The `docker-compose.yml` file defines a container named `rds-mysql` which mimics the AWS provided RDS database with MySQL.  To add additional databases
 to your local development environment, edit the `./rds-mysql/create-databases.sh` file (note: use the `.env` file for your configuration!).
+
+## AWS Resources
+
+This project provides (Localstack)[https://github.com/localstack/localstack] versions of SNS, SQS and S3.  All are available on port 4566 and accessible in other containers as AWS endpoint `http://localstack:4566` 
