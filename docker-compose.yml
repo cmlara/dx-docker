@@ -1,0 +1,68 @@
+version: '3.3'
+services:
+  web-sdep:
+    image: nginx:stable
+    container_name: web-sdep
+    ports:
+      - '8080:80'
+    volumes:
+      - ./DX-Entrypoint/dist/dx-entrypoint:/usr/share/nginx/html
+  web-sdep-live:
+    image: node:12
+    container_name: web-sdep-live
+    ports:
+      - '5300:5300'
+    volumes:
+      - ./DX-Entrypoint:/app
+      - web-sdep-node-modules:/app/node_modules
+    working_dir: /app
+    command: npm run docker-start
+  cms-sdep:
+    image: drupal:8-apache
+    environment: 
+      MYSQL_DATABASE: ${CMS_SDEP_DB_NAME}
+      MYSQL_PASSWORD: ${CMS_SDEP_DB_PASSWORD}
+      MYSQL_USER: ${CMS_SDEP_DB_USER}
+      MYSQL_HOST: ${RDS_MYSQL_HOST}
+      MYSQL_PORT: ${RDS_MYSQL_PORT}
+    depends_on: 
+      - rds-mysql
+    ports:
+      - '8081:80'
+    volumes:
+      - /var/www/html/modules
+      - /var/www/html/profiles
+      - /var/www/html/themes
+      # this takes advantage of the feature in Docker that a new anonymous
+      # volume (which is what we're creating here) will be initialized with the
+      # existing content of the image at the same location
+      - /var/www/html/sites
+    restart: always
+  rds-mysql:
+    build: 
+      context: ./rds-mysql
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${RDS_MYSQL_ROOT_PASSWORD}
+    ports:
+      - '3306:3306'
+    volumes:
+      - dx-rds-mysql:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8888:80"
+    environment:
+      - MYSQL_USERNAME=root
+      - MYSQL_ROOT_PASSWORD=${RDS_MYSQL_ROOT_PASSWORD}
+      - PMA_HOST=${RDS_MYSQL_HOST}
+      - PMA_PORT=${RDS_MYSQL_PORT}
+    depends_on:
+      - rds-mysql
+volumes:
+  # Persist mysql data
+  dx-rds-mysql:
+  # Cache node_modules
+  web-sdep-node-modules:
