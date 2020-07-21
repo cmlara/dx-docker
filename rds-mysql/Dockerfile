@@ -1,2 +1,2 @@
-FROM mysql:5.7
+FROM mysql:5.6
 COPY ./create-databases.sh /docker-entrypoint-initdb.d/create-databases.sh
