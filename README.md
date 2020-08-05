@@ -8,7 +8,7 @@ This repo will allow developers to mimic the FCS MCaaS container environment loc
 
 Install and configure docker and python
 
-1. Close this repo locally
+1. Clone this repo locally
 2. Install localstack: `pip install localstack`
 3. Change to this directory: `cd dx-docker`
 4. Clone SDEP: `git clone https://github.com/GSA/DX-Entrypoint.git`
